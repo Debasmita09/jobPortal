@@ -3,43 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Job Portal</title>
-        <link rel="stylesheet" href="style.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* Left Logo */
+        .header-left .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #4169E1;
+        }
+
+        /* Right Section */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Heart Button */
+        .heart-btn {
+            font-size: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Login/Register Button */
+        .login-btn {
+            background-color: #4169E1;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background-color: #3658B1;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-btn {
+            background-color: #4169E1;
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 100;
+            padding: 10px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            gap: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .profile-section img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-section p {
+            font-weight: bold;
+        }
+
+        /* Dropdown Links */
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Favorite Jobs Section */
+        .favorite-jobs {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 80px;
+            max-width: 400px;
+            margin: 80px auto;
+        }
+
+        /* Show on Toggle */
+        .show {
+            display: block;
+        }
+        /* .logo { font-size: 24px; font-weight: bold; color: #4169E1; cursor: pointer; } */
+        /* .header-right { display: flex; align-items: center; gap: 15px; } */
+        /* .btn { background-color: #4169E1; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; } */
+        .hero { text-align: center; padding: 50px 20px; margin-top: 4rem; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 20px; }
+        .search-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .search-bar input, .search-bar select, .search-bar button { padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        .main-content { display: flex; gap: 20px; padding: 20px; }
+        .left, .right { flex: 1; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .middle { flex: 2; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* Job Card Container */
+        .job-card {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            position: relative;
+        }
+
+        /* Job Image */
+        .job-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        /* Job Information */
+        .job-info {
+            flex: 1;
+        }
+
+        /* Job Rating */
+        .rating {
+            font-size: 16px;
+            color: #FFD700;
+            margin: 5px 0;
+        }
+
+        /* View/Apply Button */
+        .btn {
+            background: #4169E1;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #3658B1;
+        }
+
+        /* Card Actions Container */
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* Heart Icon */
+        .heart-icon {
+            font-size: 22px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #bbb;
+            transition: color 0.3s;
+        }
+
+        /* Active Heart Icon (Favorited) */
+        .heart-icon.active {
+            color: #FF4C4C;
+        }
+        .footer { text-align: center; padding: 20px; background-color: #4169E1; color: white; margin-top: 20px; }
+    </style>
 </head>
 <body>
-
-        <nav class="navbar">
-            <div class="logo">
-                <img src="logo.jpeg" alt="CareerHub Logo">
-               
+    <!-- Header Section -->
+        <header class="header">
+            <div class="header-left">
+                <a href="#" class="logo">JobPortal</a>
             </div>
-            <box-icon name='heart'></box-icon>
-        </nav>
 
-    <header class="hero" id="home">
-        <div class="profile">
-            <a href="#profile" class="btn">Your Profile</a>
+            <div class="header-right">
+                <button class="heart-btn" onclick="toggleFavJobs()">
+                    ❤️
+                </button>
+
+                <button class="login-btn" onclick="toggleModal()">Login/Register</button>
+
+                <div class="dropdown">
+                    <button class="menu-btn" onclick="toggleDropdown()">☰</button>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <div class="profile-section">
+                            <img src="avatar.jpg" alt="User Avatar">
+                            <p>My Profile</p>
+                        </div>
+                        <a href="#">Contact Us</a>
+                        <a href="#">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Placeholder for Favorite Jobs -->
+        <div class="favorite-jobs" id="favoriteJobs">
+            <h3>Favorite Jobs</h3>
+            <p>No favorite jobs yet.</p>
         </div>
 
-        <div class="hero-content">
-            <h2>Find Your Dream Job</h2>
-            <p>Your future career starts here. Browse through thousands of job opportunities.</p>
-            <a href="#jobs" class="btn">Explore Jobs</a>
-        </div>
-      
-        
-    </header>
-    
 
-    
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 JobPortal. All rights reserved.</p>
+    <div class="hero">
+        <h1>Find Your Dream Job</h1>
+        <p>Connecting you to your perfect career</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search Your Preferred Jobs">
+            <button class="btn">Search</button>
         </div>
+        <div class="filters">
+            <select><option>Pune</option><option>Kolkata</option><option>Bangalore</option></select>
+            <select><option>Technician</option><option>Web Developer</option><option>Field Sales</option></select>
+            <select><option>Full Time</option><option>Part Time</option><option>Internship</option></select>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left">Advertisement Section</div>
+        <div class="middle">
+            <div class="job-card">
+                <img src="job1.jpg" alt="Job Image">
+                <div class="job-info">
+                    <h4>Web Developer</h4>
+                    <p>Join our dynamic team.</p>
+                    <div class="rating">
+                        ⭐⭐⭐⭐☆ (4.0)
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn">View/Apply</button>
+                        <button class="heart-icon" onclick="toggleFavorite(this)" data-job-id="1">🤍</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="job-card">
+                <img src="job2.jpg" alt="Job Image">
+                <div class="job-info">
+                    <h4>Technician</h4>
+                    <p>Join our expert team.</p>
+                    <div class="rating">
+                        ⭐⭐⭐☆☆ (3.5)
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn">View/Apply</button>
+                        <button class="heart-icon" onclick="toggleFavorite(this)" data-job-id="2">🤍</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- More Job Cards -->
+        </div>
+        <div class="right">Trending Job News</div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 JobPortal. All Rights Reserved.</p>
     </footer>
 
+<script>
+    // Toggle Dropdown Menu
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            dropdown.classList.toggle("show");
+        }
+
+        // Toggle Favorite Jobs List
+        function toggleFavJobs() {
+            const favJobs = document.getElementById("favoriteJobs");
+            favJobs.classList.toggle("show");
+        }
+
+        // Toggle Login/Register Modal
+        function toggleModal() {
+            alert("Login/Register Modal Opens (To be implemented)");
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function (event) {
+            const dropdown = document.getElementById("dropdownMenu");
+            if (!event.target.matches('.menu-btn')) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        };
+
+        // Store Favorite Jobs (Simulated for now)
+        let favoriteJobs = [];
+
+        // Toggle Favorite Function
+        function toggleFavorite(element) {
+            const jobId = element.getAttribute('data-job-id');
+
+            if (favoriteJobs.includes(jobId)) {
+                // Remove from favorites
+                favoriteJobs = favoriteJobs.filter(id => id !== jobId);
+                element.classList.remove('active');
+                element.textContent = '🤍'; // Empty heart
+            } else {
+                // Add to favorites
+                favoriteJobs.push(jobId);
+                element.classList.add('active');
+                element.textContent = '❤️'; // Filled heart
+            }
+            console.log("Favorite Jobs:", favoriteJobs);
+        }
+
+
+</script>
 </body>
 </html>
